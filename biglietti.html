@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acquisto Biglietti Partita di Calcio</title>
+    <style>
+        .hidden { display: none; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Acquisto Biglietti per la Partita di Calcio</h1>
+    <form action="gestioneacquisto.php" method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <label for="cognome">Cognome:</label>
+        <input type="text" id="cognome" name="cognome" required><br><br>
+
+        <label for="codicefiscale">Codice Fiscale:</label>
+        <input type="text" id="codicefiscale" name="codicefiscale" required><br><br>
+
+        <label for="settore">Settore:</label>
+        <select id="settore" name="settore" required>
+            <option value="curva">Curva (30€)</option>
+            <option value="tribuna_centrale">Tribuna Centrale (80€)</option>
+            <option value="tribuna_donore">Tribuna d'Onore (120€)</option>
+        </select><br><br>
+
+        <label for="codicesconto">Codice Sconto:</label>
+        <input type="text" id="codicesconto" name="codicesconto"><br><br>
+
+        <label>Tipo di Biglietto:</label><br>
+        <input type="radio" id="unico" name="tipo" value="unico" checked>
+        <label for="unico">Biglietto Unico</label><br>
+        <input type="radio" id="piu" name="tipo" value="piu">
+        <label for="piu">Più Biglietti</label><br><br>
+
+        <div id="piuBiglietti" class="hidden">
+            <label for="num_biglietti">Numero Biglietti Aggiuntivi:</label>
+            <input type="number" id="num_biglietti" name="num_biglietti" value="1" min="1" max="4" readonly><br><br>
+            <button type="button" id="aggiungi">+</button>
+            <button type="button" id="rimuovi">-</button><br><br>
+        </div>
+
+        <button type="submit">Acquista Biglietti</button>
+    </form>
+
+    <script>
+        document.getElementById('piu').addEventListener('click', function() {
+            document.getElementById('piuBiglietti').classList.remove('hidden');
+        });
+
+        document.getElementById('unico').addEventListener('click', function() {
+            document.getElementById('piuBiglietti').classList.add('hidden');
+        });
+
+        let numBiglietti = 1;
+        const numInput = document.getElementById('num_biglietti');
+        const aggiungiBtn = document.getElementById('aggiungi');
+        const rimuoviBtn = document.getElementById('rimuovi');
+
+        aggiungiBtn.addEventListener('click', function() {
+            if (numBiglietti < 4) {
+                numBiglietti++;
+                numInput.value = numBiglietti;
+            }
+        });
+
+        rimuoviBtn.addEventListener('click', function() {
+            if (numBiglietti > 1) {
+                numBiglietti--;
+                numInput.value = numBiglietti;
+            }
+        });
+    </script>
+</body>
+</html>
